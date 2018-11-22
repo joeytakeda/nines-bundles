@@ -10,47 +10,47 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Nines\BlogBundle\Entity\PostStatus;
-use Nines\BlogBundle\Form\PostStatusType;
+use Nines\BlogBundle\Entity\PageStatus;
+use Nines\BlogBundle\Form\PageStatusType;
 
 /**
- * PostStatus controller.
+ * PageStatus controller.
  *
  * @Security("has_role('ROLE_USER')")
- * @Route("/post_status")
+ * @Route("/page_status")
  */
-class PostStatusController extends Controller {
+class PageStatusController extends Controller {
 
     /**
-     * Lists all PostStatus entities.
+     * Lists all PageStatus entities.
      *
      * @param Request $request
      *
      * @return array
      *
-     * @Route("/", name="post_status_index")
+     * @Route("/", name="page_status_index")
      * @Method("GET")
      * @Template()
      */
     public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $qb = $em->createQueryBuilder();
-        $qb->select('e')->from(PostStatus::class, 'e')->orderBy('e.id', 'ASC');
+        $qb->select('e')->from(PageStatus::class, 'e')->orderBy('e.id', 'ASC');
         $query = $qb->getQuery();
         $paginator = $this->get('knp_paginator');
-        $postStatuses = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $pageStatuses = $paginator->paginate($query, $request->query->getint('page', 1), 25);
 
         return array(
-            'postStatuses' => $postStatuses,
+            'pageStatuses' => $pageStatuses,
         );
     }
 
     /**
-     * Typeahead API endpoint for PostStatus entities.
+     * Typeahead API endpoint for PageStatus entities.
      *
      * @param Request $request
      *
-     * @Route("/typeahead", name="post_status_typeahead")
+     * @Route("/typeahead", name="page_status_typeahead")
      * @Security("has_role('ROLE_BLOG_ADMIN')")
      * @Method("GET")
      * @return JsonResponse
@@ -61,7 +61,7 @@ class PostStatusController extends Controller {
             return new JsonResponse([]);
         }
         $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(PostStatus::class);
+        $repo = $em->getRepository(PageStatus::class);
         $data = [];
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
@@ -73,46 +73,46 @@ class PostStatusController extends Controller {
     }
 
     /**
-     * Creates a new PostStatus entity.
+     * Creates a new PageStatus entity.
      *
      * @param Request $request
      *
      * @return array|RedirectResponse
      *
      * @Security("has_role('ROLE_BLOG_ADMIN')")
-     * @Route("/new", name="post_status_new")
+     * @Route("/new", name="page_status_new")
      * @Method({"GET", "POST"})
      * @Template()
      */
     public function newAction(Request $request) {
-        $postStatus = new PostStatus();
-        $form = $this->createForm(PostStatusType::class, $postStatus);
+        $pageStatus = new PageStatus();
+        $form = $this->createForm(PageStatusType::class, $pageStatus);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($postStatus);
+            $em->persist($pageStatus);
             $em->flush();
 
-            $this->addFlash('success', 'The new postStatus was created.');
-            return $this->redirectToRoute('post_status_show', array('id' => $postStatus->getId()));
+            $this->addFlash('success', 'The new pageStatus was created.');
+            return $this->redirectToRoute('page_status_show', array('id' => $pageStatus->getId()));
         }
 
         return array(
-            'postStatus' => $postStatus,
+            'pageStatus' => $pageStatus,
             'form' => $form->createView(),
         );
     }
 
     /**
-     * Creates a new PostStatus entity in a popup.
+     * Creates a new PageStatus entity in a popup.
      *
      * @param Request $request
      *
      * @return array|RedirectResponse
      *
      * @Security("has_role('ROLE_BLOG_ADMIN')")
-     * @Route("/new_popup", name="post_status_new_popup")
+     * @Route("/new_popup", name="page_status_new_popup")
      * @Method({"GET", "POST"})
      * @Template()
      */
@@ -121,74 +121,74 @@ class PostStatusController extends Controller {
     }
 
     /**
-     * Finds and displays a PostStatus entity.
+     * Finds and displays a PageStatus entity.
      *
-     * @param PostStatus $postStatus
+     * @param PageStatus $pageStatus
      *
      * @return array
      *
-     * @Route("/{id}", name="post_status_show")
+     * @Route("/{id}", name="page_status_show")
      * @Method("GET")
      * @Template()
      */
-    public function showAction(PostStatus $postStatus) {
+    public function showAction(PageStatus $pageStatus) {
 
         return array(
-            'postStatus' => $postStatus,
+            'pageStatus' => $pageStatus,
         );
     }
 
     /**
-     * Displays a form to edit an existing PostStatus entity.
+     * Displays a form to edit an existing PageStatus entity.
      *
      *
      * @param Request $request
-     * @param PostStatus $postStatus
+     * @param PageStatus $pageStatus
      *
      * @return array|RedirectResponse
      *
      * @Security("has_role('ROLE_BLOG_ADMIN')")
-     * @Route("/{id}/edit", name="post_status_edit")
+     * @Route("/{id}/edit", name="page_status_edit")
      * @Method({"GET", "POST"})
      * @Template()
      */
-    public function editAction(Request $request, PostStatus $postStatus) {
-        $editForm = $this->createForm(PostStatusType::class, $postStatus);
+    public function editAction(Request $request, PageStatus $pageStatus) {
+        $editForm = $this->createForm(PageStatusType::class, $pageStatus);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
-            $this->addFlash('success', 'The postStatus has been updated.');
-            return $this->redirectToRoute('post_status_show', array('id' => $postStatus->getId()));
+            $this->addFlash('success', 'The pageStatus has been updated.');
+            return $this->redirectToRoute('page_status_show', array('id' => $pageStatus->getId()));
         }
 
         return array(
-            'postStatus' => $postStatus,
+            'pageStatus' => $pageStatus,
             'edit_form' => $editForm->createView(),
         );
     }
 
     /**
-     * Deletes a PostStatus entity.
+     * Deletes a PageStatus entity.
      *
      *
      * @param Request $request
-     * @param PostStatus $postStatus
+     * @param PageStatus $pageStatus
      *
      * @return array|RedirectResponse
      *
      * @Security("has_role('ROLE_BLOG_ADMIN')")
-     * @Route("/{id}/delete", name="post_status_delete")
+     * @Route("/{id}/delete", name="page_status_delete")
      * @Method("GET")
      */
-    public function deleteAction(Request $request, PostStatus $postStatus) {
+    public function deleteAction(Request $request, PageStatus $pageStatus) {
         $em = $this->getDoctrine()->getManager();
-        $em->remove($postStatus);
+        $em->remove($pageStatus);
         $em->flush();
-        $this->addFlash('success', 'The postStatus was deleted.');
+        $this->addFlash('success', 'The pageStatus was deleted.');
 
-        return $this->redirectToRoute('post_status_index');
+        return $this->redirectToRoute('page_status_index');
     }
 
 }

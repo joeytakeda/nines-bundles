@@ -10,46 +10,46 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Nines\BlogBundle\Entity\PostCategory;
-use Nines\BlogBundle\Form\PostCategoryType;
+use Nines\BlogBundle\Entity\PageCategory;
+use Nines\BlogBundle\Form\PageCategoryType;
 
 /**
- * PostCategory controller.
+ * PageCategory controller.
  *
- * @Route("/post_category")
+ * @Route("/page_category")
  */
-class PostCategoryController extends Controller {
+class PageCategoryController extends Controller {
 
     /**
-     * Lists all PostCategory entities.
+     * Lists all PageCategory entities.
      *
      * @param Request $request
      *
      * @return array
      *
-     * @Route("/", name="post_category_index")
+     * @Route("/", name="page_category_index")
      * @Method("GET")
      * @Template()
      */
     public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $qb = $em->createQueryBuilder();
-        $qb->select('e')->from(PostCategory::class, 'e')->orderBy('e.id', 'ASC');
+        $qb->select('e')->from(PageCategory::class, 'e')->orderBy('e.id', 'ASC');
         $query = $qb->getQuery();
         $paginator = $this->get('knp_paginator');
-        $postCategories = $paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $pageCategories = $paginator->paginate($query, $request->query->getint('page', 1), 25);
 
         return array(
-            'postCategories' => $postCategories,
+            'pageCategories' => $pageCategories,
         );
     }
 
     /**
-     * Typeahead API endpoint for PostCategory entities.
+     * Typeahead API endpoint for PageCategory entities.
      *
      * @param Request $request
      *
-     * @Route("/typeahead", name="post_category_typeahead")
+     * @Route("/typeahead", name="page_category_typeahead")
      * @Security("has_role('ROLE_BLOG_ADMIN')")
      * @Method("GET")
      * @return JsonResponse
@@ -60,7 +60,7 @@ class PostCategoryController extends Controller {
             return new JsonResponse([]);
         }
         $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(PostCategory::class);
+        $repo = $em->getRepository(PageCategory::class);
         $data = [];
         foreach ($repo->typeaheadQuery($q) as $result) {
             $data[] = [
@@ -72,46 +72,46 @@ class PostCategoryController extends Controller {
     }
 
     /**
-     * Creates a new PostCategory entity.
+     * Creates a new PageCategory entity.
      *
      * @param Request $request
      *
      * @return array|RedirectResponse
      *
      * @Security("has_role('ROLE_BLOG_ADMIN')")
-     * @Route("/new", name="post_category_new")
+     * @Route("/new", name="page_category_new")
      * @Method({"GET", "POST"})
      * @Template()
      */
     public function newAction(Request $request) {
-        $postCategory = new PostCategory();
-        $form = $this->createForm(PostCategoryType::class, $postCategory);
+        $pageCategory = new PageCategory();
+        $form = $this->createForm(PageCategoryType::class, $pageCategory);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($postCategory);
+            $em->persist($pageCategory);
             $em->flush();
 
-            $this->addFlash('success', 'The new postCategory was created.');
-            return $this->redirectToRoute('post_category_show', array('id' => $postCategory->getId()));
+            $this->addFlash('success', 'The new pageCategory was created.');
+            return $this->redirectToRoute('page_category_show', array('id' => $pageCategory->getId()));
         }
 
         return array(
-            'postCategory' => $postCategory,
+            'pageCategory' => $pageCategory,
             'form' => $form->createView(),
         );
     }
 
     /**
-     * Creates a new PostCategory entity in a popup.
+     * Creates a new PageCategory entity in a popup.
      *
      * @param Request $request
      *
      * @return array|RedirectResponse
      *
      * @Security("has_role('ROLE_BLOG_ADMIN')")
-     * @Route("/new_popup", name="post_category_new_popup")
+     * @Route("/new_popup", name="page_category_new_popup")
      * @Method({"GET", "POST"})
      * @Template()
      */
@@ -120,74 +120,74 @@ class PostCategoryController extends Controller {
     }
 
     /**
-     * Finds and displays a PostCategory entity.
+     * Finds and displays a PageCategory entity.
      *
-     * @param PostCategory $postCategory
+     * @param PageCategory $pageCategory
      *
      * @return array
      *
-     * @Route("/{id}", name="post_category_show")
+     * @Route("/{id}", name="page_category_show")
      * @Method("GET")
      * @Template()
      */
-    public function showAction(PostCategory $postCategory) {
+    public function showAction(PageCategory $pageCategory) {
 
         return array(
-            'postCategory' => $postCategory,
+            'pageCategory' => $pageCategory,
         );
     }
 
     /**
-     * Displays a form to edit an existing PostCategory entity.
+     * Displays a form to edit an existing PageCategory entity.
      *
      *
      * @param Request $request
-     * @param PostCategory $postCategory
+     * @param PageCategory $pageCategory
      *
      * @return array|RedirectResponse
      *
      * @Security("has_role('ROLE_BLOG_ADMIN')")
-     * @Route("/{id}/edit", name="post_category_edit")
+     * @Route("/{id}/edit", name="page_category_edit")
      * @Method({"GET", "POST"})
      * @Template()
      */
-    public function editAction(Request $request, PostCategory $postCategory) {
-        $editForm = $this->createForm(PostCategoryType::class, $postCategory);
+    public function editAction(Request $request, PageCategory $pageCategory) {
+        $editForm = $this->createForm(PageCategoryType::class, $pageCategory);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
-            $this->addFlash('success', 'The postCategory has been updated.');
-            return $this->redirectToRoute('post_category_show', array('id' => $postCategory->getId()));
+            $this->addFlash('success', 'The pageCategory has been updated.');
+            return $this->redirectToRoute('page_category_show', array('id' => $pageCategory->getId()));
         }
 
         return array(
-            'postCategory' => $postCategory,
+            'pageCategory' => $pageCategory,
             'edit_form' => $editForm->createView(),
         );
     }
 
     /**
-     * Deletes a PostCategory entity.
+     * Deletes a PageCategory entity.
      *
      *
      * @param Request $request
-     * @param PostCategory $postCategory
+     * @param PageCategory $pageCategory
      *
      * @return array|RedirectResponse
      *
      * @Security("has_role('ROLE_BLOG_ADMIN')")
-     * @Route("/{id}/delete", name="post_category_delete")
+     * @Route("/{id}/delete", name="page_category_delete")
      * @Method("GET")
      */
-    public function deleteAction(Request $request, PostCategory $postCategory) {
+    public function deleteAction(Request $request, PageCategory $pageCategory) {
         $em = $this->getDoctrine()->getManager();
-        $em->remove($postCategory);
+        $em->remove($pageCategory);
         $em->flush();
-        $this->addFlash('success', 'The postCategory was deleted.');
+        $this->addFlash('success', 'The pageCategory was deleted.');
 
-        return $this->redirectToRoute('post_category_index');
+        return $this->redirectToRoute('page_category_index');
     }
 
 }

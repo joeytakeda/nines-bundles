@@ -16,5 +16,4 @@ services:
 
     Nines\BlogBundle\Menu\Builder:
         tags:
-            - { name: knp_menu.menu_builder, method: postNavMenu, alias: posts}
             - { name: knp_menu.menu_builder, method: pageNavMenu, alias: pages}

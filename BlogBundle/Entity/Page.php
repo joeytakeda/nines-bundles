@@ -76,6 +76,26 @@ class Page extends AbstractEntity {
     private $searchable;
 
     /**
+     * Post category.
+     *
+     * @var PostCategory
+     *
+     * @ORM\ManyToOne(targetEntity="PageCategory", inversedBy="pages")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
+
+    /**
+     * Post status.
+     *
+     * @var PostStatus
+     *
+     * @ORM\ManyToOne(targetEntity="PageStatus", inversedBy="pages")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $status;
+
+    /**
      * User that created the post.
      *
      * @var User
@@ -289,5 +309,53 @@ class Page extends AbstractEntity {
     public function getIncludeComments()
     {
         return $this->includeComments;
+    }
+
+    /**
+     * Set category.
+     *
+     * @param \Nines\BlogBundle\Entity\PageCategory $category
+     *
+     * @return Page
+     */
+    public function setCategory(\Nines\BlogBundle\Entity\PageCategory $category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category.
+     *
+     * @return \Nines\BlogBundle\Entity\PageCategory
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set status.
+     *
+     * @param \Nines\BlogBundle\Entity\PageStatus $status
+     *
+     * @return Page
+     */
+    public function setStatus(\Nines\BlogBundle\Entity\PageStatus $status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status.
+     *
+     * @return \Nines\BlogBundle\Entity\PageStatus
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

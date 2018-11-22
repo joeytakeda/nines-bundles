@@ -5,9 +5,9 @@ namespace Nines\BlogBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * PostStatusRepository
+ * PostCategoryRepository
  */
-class PostStatusRepository extends EntityRepository {
+class PageCategoryRepository extends EntityRepository {
 
     public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('e');

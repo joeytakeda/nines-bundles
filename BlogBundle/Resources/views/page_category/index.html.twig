@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block pageheader %}
-    <h1>PostCategory List</h1>
+    <h1>PageCategory List</h1>
     <p class="count">
-        Displaying {{ postCategories|length }} postCategories of {{ postCategories.getTotalItemCount }} total.
+        Displaying {{ pageCategories|length }} pageCategories of {{ pageCategories.getTotalItemCount }} total.
     </p>
 {% endblock %}
 
@@ -12,7 +12,7 @@
     {% if is_granted('ROLE_BLOG_ADMIN') %}
         <div class='btn-toolbar pull-right'>
             <div class='btn-group'>
-                <a href="{{ path('post_category_new') }}" class="btn btn-default">
+                <a href="{{ path('page_category_new') }}" class="btn btn-default">
                     <span class="glyphicon glyphicon-plus"></span> New
                 </a>
             </div>
@@ -27,21 +27,21 @@
             </tr>
         </thead>
         <tbody>
-            {% for postCategory in postCategories %}
+            {% for pageCategory in pageCategories %}
                 <tr>
                     <td>
-                        <a href="{{ path('post_category_show', { 'id': postCategory.id }) }}">
-                            {{ postCategory.label }}
+                        <a href="{{ path('page_category_show', { 'id': pageCategory.id }) }}">
+                            {{ pageCategory.label }}
                         </a>
                     </td>
-                    <td>{{ postCategory.description }}</td>
+                    <td>{{ pageCategory.description }}</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
     <div class="navigation">
-        {{ knp_pagination_render(postCategories) }}
+        {{ knp_pagination_render(pageCategories) }}
     </div>
 
 {% endblock %}

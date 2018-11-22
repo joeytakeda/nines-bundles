@@ -17,6 +17,8 @@ class LoadPage extends Fixture implements DependentFixtureInterface {
         $draft->setExcerpt("I am draft excerpt.");
         $draft->setContent("I am an excerpt and I like drafts.");
         $draft->setSearchable("I am an excerpt and I like drafts.");
+        $draft->setStatus($this->getReference('page-status-1'));
+        $draft->setCategory($this->getReference('page-category-1'));
         $draft->setUser($this->getReference('user.user'));
         $this->setReference('page.draft', $draft);
         $manager->persist($draft);
@@ -24,6 +26,8 @@ class LoadPage extends Fixture implements DependentFixtureInterface {
         $published = new Page();
         $published->setTitle("Hello world.");
         $published->setPublic(true);
+        $published->setCategory($this->getReference('page-category-1'));
+        $published->setStatus($this->getReference('page-status-1'));
         $published->setExcerpt("I am published excerpt.");
         $published->setContent("I am an excerpt and I like publishing.");
         $published->setSearchable("I am an excerpt and I like publishing.");

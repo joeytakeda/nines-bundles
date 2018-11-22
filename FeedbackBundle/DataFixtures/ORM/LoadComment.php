@@ -5,9 +5,8 @@ namespace Nines\FeedbackBundle\DataFixtures\ORM;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Nines\BlogBundle\Entity\Page;
 use Nines\BlogBundle\DataFixtures\ORM\LoadPage;
-use Nines\BlogBundle\DataFixtures\ORM\LoadPost;
+use Nines\BlogBundle\Entity\Page;
 use Nines\FeedbackBundle\Entity\Comment;
 
 /**
@@ -37,7 +36,6 @@ class LoadComment extends Fixture implements DependentFixtureInterface {
         return array(
             LoadCommentStatus::class,
             LoadPage::class,
-            LoadPost::class,
         );
     }
 

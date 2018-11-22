@@ -2,14 +2,14 @@
 
 namespace Nines\BlogBundle\Form;
 
-use Nines\BlogBundle\Entity\PostCategory;
+use Nines\BlogBundle\Entity\PageCategory;
 use Nines\UtilBundle\Form\TermType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * PostCategoryType form.
  */
-class PostCategoryType extends TermType
+class PageCategoryType extends TermType
 {
 
     /**
@@ -20,7 +20,7 @@ class PostCategoryType extends TermType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => PostCategory::class,
+            'data_class' => PageCategory::class,
         ));
     }
 

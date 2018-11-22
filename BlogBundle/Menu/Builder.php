@@ -62,111 +62,37 @@ class Builder implements ContainerAwareInterface {
     }
 
     /**
-     * Build a menu for blog posts.
-     *
-     * @param array $options
-     * @return ItemInterface
-     */
-    public function postNavMenu(array $options) {
-        $menu = $this->factory->createItem('root');
-        $menu->setChildrenAttributes(array(
-            'class' => 'nav navbar-nav',
-        ));
-        $menu->setAttribute('dropdown', true);
-
-        $status = $this->em->getRepository('NinesBlogBundle:PostStatus')->findOneBy(array(
-            'public' => true,
-        ));
-        $posts = $this->em->getRepository('NinesBlogBundle:Post')->findBy(
-                array('status' => $status),
-                array('id' => 'DESC')
-        );
-        $title = 'Announcements';
-        if(isset($options['title'])) {
-            $title = $options['title'];
-        }
-
-        $menu->addChild('announcements', array(
-            'uri' => '#',
-            'label' => $title . self::CARET
-        ));
-        $menu['announcements']->setAttribute('dropdown', true);
-        $menu['announcements']->setLinkAttribute('class', 'dropdown-toggle');
-        $menu['announcements']->setLinkAttribute('data-toggle', 'dropdown');
-        $menu['announcements']->setChildrenAttribute('class', 'dropdown-menu');
-
-        foreach ($posts as $post) {
-            $menu['announcements']->addChild($post->getTitle(), array(
-                'route' => 'post_show',
-                'routeParameters' => array(
-                    'id' => $post->getId(),
-                )
-            ));
-        }
-        $menu['announcements']->addChild('divider', array(
-            'label' => '',
-        ));
-        $menu['announcements']['divider']->setAttributes(array(
-            'role' => 'separator',
-            'class' => 'divider',
-        ));
-
-        $menu['announcements']->addChild('All Announcements', array(
-            'route' => 'post_index',
-        ));
-
-        if ($this->hasRole('ROLE_BLOG_ADMIN')) {
-            $menu['announcements']->addChild('divider', array(
-                'label' => '',
-            ));
-            $menu['announcements']['divider']->setAttributes(array(
-                'role' => 'separator',
-                'class' => 'divider',
-            ));
-
-            $menu['announcements']->addChild('post_category', array(
-                'label' => 'Post Categories',
-                'route' => 'post_category_index',
-            ));
-            $menu['announcements']->addChild('post_status', array(
-                'label' => 'Post Statuses',
-                'route' => 'post_status_index',
-            ));
-        }
-
-        return $menu;
-    }
-
-    /**
      * Build a menu for blog pages.
      *
      * @param array $options
      * @return ItemInterface
      */
     public function pageNavMenu(array $options) {
-        $menu = $this->factory->createItem('root');
-        $menu->setChildrenAttributes(array(
+        $settings = array_merge([
+            'title' => 'About',
+        ], $options);
+        $root = $this->factory->createItem('root');
+        $root->setChildrenAttributes(array(
             'class' => 'nav navbar-nav',
         ));
-        $menu->setAttribute('dropdown', true);
+        $root->setAttribute('dropdown', true);
         $pages = $this->em->getRepository('NinesBlogBundle:Page')->findBy(
-                array('public' => true),
-                array('weight' => 'ASC',
-                    'title' => 'ASC')
+            array('public' => true),
+            array('weight' => 'ASC','title' => 'ASC')
         );
 
-        $menu->addChild('about', array(
+        $menu = $root->addChild('about', array(
             'uri' => '#',
-            'label' => 'About' . self::CARET
+            'label' => $settings['title'] . self::CARET
         ));
-        $menu['about']->setAttribute('dropdown', true);
-        $menu['about']->setLinkAttribute('class', 'dropdown-toggle');
-        $menu['about']->setLinkAttribute('data-toggle', 'dropdown');
-        $menu['about']->setChildrenAttribute('class', 'dropdown-menu');
+        $menu->setAttribute('dropdown', true);
+        $menu->setLinkAttribute('class', 'dropdown-toggle');
+        $menu->setLinkAttribute('data-toggle', 'dropdown');
+        $menu->setChildrenAttribute('class', 'dropdown-menu');
 
 
         foreach ($pages as $page) {
-            $menu['about']->addChild($page->getTitle(), array(
+            $menu->addChild($page->getTitle(), array(
                 'route' => 'page_show',
                 'routeParameters' => array(
                     'id' => $page->getId(),
@@ -174,21 +100,21 @@ class Builder implements ContainerAwareInterface {
             ));
         }
         if ($this->hasRole('ROLE_BLOG_ADMIN')) {
-            $menu['about']->addChild('divider', array(
+            $menu->addChild('divider', array(
                 'label' => '',
             ));
-            $menu['about']['divider']->setAttributes(array(
+            $menu['divider']->setAttributes(array(
                 'role' => 'separator',
                 'class' => 'divider',
             ));
 
-            $menu['about']->addChild('page_admin', array(
+            $menu->addChild('page_admin', array(
                 'label' => 'All Pages',
                 'route' => 'page_index',
             ));
         }
 
-        return $menu;
+        return $root;
     }
 
 }

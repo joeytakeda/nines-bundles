@@ -2,16 +2,16 @@
 
 namespace Nines\BlogBundle\Form;
 
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
-use Symfony\Component\Form\AbstractType;
+use Nines\BlogBundle\Entity\PageStatus;
+use Nines\UtilBundle\Form\TermType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * PostType form.
+ * PageStatusType form.
  */
-class PostType extends AbstractType {
+class PageStatusType extends TermType {
 
     /**
      * Add form fields to $builder.
@@ -20,31 +20,9 @@ class PostType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder->add('title', null, array(
-            'label' => 'Title',
-            'required' => true,
-            'attr' => array(
-                'help_block' => '',
-            ),
-        ));
-        $builder->add('category');
-        $builder->add('status');
-        $builder->add('excerpt', CKEditorType::class, array(
-            'label' => 'Excerpt',
-            'required' => false,
-            'attr' => array(
-                'help_block' => '',
-            ),
-        ));
-        $builder->add('content', CKEditorType::class, array(
-            'label' => 'Content',
-            'required' => true,
-            'attr' => array(
-                'help_block' => '',
-            ),
-        ));
-        $builder->add('includeComments', ChoiceType::class, array(
-            'label' => 'Include Comments',
+        parent::buildForm($builder, $options);
+        $builder->add('public', ChoiceType::class, array(
+            'label' => 'Public',
             'expanded' => true,
             'multiple' => false,
             'choices' => array(
@@ -69,7 +47,7 @@ class PostType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Nines\BlogBundle\Entity\Post'
+            'data_class' => PageStatus::class
         ));
     }
 

@@ -8,12 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractTerm;
 
 /**
- * PostStatus
+ * PageStatus
  *
- * @ORM\Table(name="blog_post_status")
- * @ORM\Entity(repositoryClass="Nines\BlogBundle\Repository\PostStatusRepository")
+ * @ORM\Table(name="blog_page_status")
+ * @ORM\Entity(repositoryClass="Nines\BlogBundle\Repository\PageStatusRepository")
  */
-class PostStatus extends AbstractTerm
+class PageStatus extends AbstractTerm
 {
     /**
      * True if the status is meant to be public.
@@ -23,54 +23,54 @@ class PostStatus extends AbstractTerm
     private $public;
 
     /**
-     * List of the posts with this status.
-     * 
-     * @var Collection|Post[]
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="status")
+     * List of the pages with this status.
+     *
+     * @var Collection|Page[]
+     * @ORM\OneToMany(targetEntity="Page", mappedBy="status")
      */
-    private $posts;
+    private $pages;
 
     /**
-     * Build the post.
+     * Build the page.
      */
     public function __construct() {
         parent::__construct();
         $this->public = false;
-        $this->posts = new ArrayCollection();
+        $this->pages = new ArrayCollection();
     }
-    
+
     /**
-     * Add post
+     * Add page
      *
-     * @param Post $post
+     * @param Page $page
      *
-     * @return PostStatus
+     * @return PageStatus
      */
-    public function addPost(Post $post)
+    public function addPage(Page $page)
     {
-        $this->posts[] = $post;
+        $this->pages[] = $page;
 
         return $this;
     }
 
     /**
-     * Remove post
+     * Remove page
      *
-     * @param Post $post
+     * @param Page $page
      */
-    public function removePost(Post $post)
+    public function removePage(Page $page)
     {
-        $this->posts->removeElement($post);
+        $this->pages->removeElement($page);
     }
 
     /**
-     * Get posts
+     * Get pages
      *
      * @return Collection
      */
-    public function getPosts()
+    public function getPages()
     {
-        return $this->posts;
+        return $this->pages;
     }
 
     /**
@@ -78,7 +78,7 @@ class PostStatus extends AbstractTerm
      *
      * @param boolean $public
      *
-     * @return PostStatus
+     * @return PageStatus
      */
     public function setPublic($public)
     {
