@@ -5,6 +5,8 @@ namespace Nines\BlogBundle\Menu;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
+use Nines\BlogBundle\Entity\Page;
+use Nines\BlogBundle\Entity\PageCategory;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -69,18 +71,30 @@ class Builder implements ContainerAwareInterface {
      */
     public function pageNavMenu(array $options) {
         $settings = array_merge([
+            'category' => null,
             'title' => 'About',
         ], $options);
+        $pages = array();
+        if($settings['category']) {
+            $category = $this->em->getRepository(PageCategory::class)->findOneBy(array(
+                'name' => $settings['category'],
+            ));
+            $pages = $this->em->getRepository(Page::class)->findBy(
+                array('public' => true, 'category' => $category),
+                array('weight' => 'ASC','title' => 'ASC')
+            );
+        } else {
+            $pages = $this->em->getRepository('NinesBlogBundle:Page')->findBy(
+                array('public' => true),
+                array('weight' => 'ASC','title' => 'ASC')
+            );
+        }
+
         $root = $this->factory->createItem('root');
         $root->setChildrenAttributes(array(
             'class' => 'nav navbar-nav',
         ));
         $root->setAttribute('dropdown', true);
-        $pages = $this->em->getRepository('NinesBlogBundle:Page')->findBy(
-            array('public' => true),
-            array('weight' => 'ASC','title' => 'ASC')
-        );
-
         $menu = $root->addChild('about', array(
             'uri' => '#',
             'label' => $settings['title'] . self::CARET
@@ -89,7 +103,6 @@ class Builder implements ContainerAwareInterface {
         $menu->setLinkAttribute('class', 'dropdown-toggle');
         $menu->setLinkAttribute('data-toggle', 'dropdown');
         $menu->setChildrenAttribute('class', 'dropdown-menu');
-
 
         foreach ($pages as $page) {
             $menu->addChild($page->getTitle(), array(
