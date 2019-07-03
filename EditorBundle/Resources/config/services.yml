@@ -1,3 +1,6 @@
+parameters:
+  nines.editor.upload_dir: web/tinymce
+
 services:
 
   _defaults:
