@@ -16,6 +16,17 @@ Open your composer.json file and add the Nines Bundles repository.
 
 ```
 
+And make sure that Twig version 2 is installed.
+
+```json
+    "dependencies": {
+        "twig/twig": "^2.0",
+```
+
+```bash
+composer update twig/twig
+```
+
 Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
