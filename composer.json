@@ -25,6 +25,7 @@
         "friendsofsymfony/user-bundle": "^2.0",
         "knplabs/knp-menu-bundle": "^2.2",
         "knplabs/knp-paginator-bundle": "^4.0",
-        "symfony/templating": "^3.4"
+        "symfony/templating": "^3.4",
+        "twig/twig": "^2.0"
     }
 }
