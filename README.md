@@ -3,6 +3,16 @@ Nines Bundles
 
 Some useful bundles.
 
+Versions and Branches
+---------------------
+
+The 2.x branch uses TinyMCE as a text editor. The 1.x branch is set up for 
+CkEditor. If you need one or the other editor make sure you pick the right 
+branch. The poorly-named "master" branch is a development thing meant
+for use as a git submodule. It's probably out of date.
+
+These instructions are for the 1.x branch.
+
 Installation
 ------------
 
@@ -42,7 +52,7 @@ The instructions for the master branch were to install the bundles as a git
 submodule. This was convenient at the time but not really sustainable in the
 long term.
 
-Step 1: Remove the submodule
+### Step 1: Remove the submodule
 
 ```console
 $ git submodule deinit src/Nines
@@ -51,11 +61,11 @@ $ git commit -m "removed submodule"
 $ rm -rf .git/modules/src/Nines
 ```
 
-Step 2: Download the bundles as a composer package
+### Step 2: Download the bundles as a composer package
 
 Follow step 1 above.
 
-Step 3: Adjust the config
+### Step 3: Adjust the config
 
 Change the twig path for the NinesUtilBundle.
 
@@ -66,3 +76,6 @@ twig:
     paths:
         '%kernel.project_dir%/vendor/ubermichael/Nines/UtilBundle/Resources/views': NinesUtilBundle
 ```
+
+That should be it.
+
