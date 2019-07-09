@@ -74,7 +74,7 @@ Change the twig path for the NinesUtilBundle.
 
 twig:
     paths:
-        '%kernel.project_dir%/vendor/ubermichael/Nines/UtilBundle/Resources/views': NinesUtilBundle
+        '%kernel.project_dir%/vendor/ubermichael/nines/UtilBundle/Resources/views': NinesUtilBundle
 ```
 
 That should be it.
