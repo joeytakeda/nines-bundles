@@ -45,6 +45,34 @@ of the Composer documentation.
 
 Consult the documentation for each one.
 
+Updating from 1.x
+-----------------
+
+```shell
+composer require phpunit/phpunit ^8.2
+composer require ubermichael/nines 2.x-dev
+composer remove friendsofsymfony/ckeditor-bundle
+```
+
+Remove the CkEditor configuration.
+
+```yaml
+
+```
+
+Remove the CkEditor bundle from AppKernel.php and replace it with the NinesEditorBundle.
+
+```diff
+-            new FOS\CKEditorBundle\FOSCKEditorBundle(),
++            new Nines\EditorBundle\NinesEditorBundle(),
+```
+
+Add TinyMCE as a Bower dependency for your project.
+
+```bash
+bower install --save "tinymce-dist#^5.0.2"
+```
+
 Updating from Master
 --------------------
 
@@ -87,3 +115,4 @@ twig:
 ```
 
 That should be it.
+
