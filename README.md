@@ -114,5 +114,14 @@ twig:
         '%kernel.project_dir%/vendor/ubermichael/nines/UtilBundle/Resources/views': NinesUtilBundle
 ```
 
+Add the image upload directory parameter.
+
+```yaml
+# app/config/paramters.yml and app/config/paramters.yml.dist
+
+paramters:
+    nines.editor.upload_dir: web/tinymce
+```
+
 That should be it.
 
