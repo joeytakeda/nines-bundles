@@ -3,7 +3,7 @@
     const mceSettings = {
         branding: false,
         selector: '.tinymce',
-        plugins: 'image imagetools link lists paste wordcount',
+        plugins: 'hr image imagetools link lists paste wordcount',
         relative_urls: false,
         convert_urls: false,
         height: 480,
