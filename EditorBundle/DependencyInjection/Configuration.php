@@ -20,9 +20,41 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('nines_editor');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode->children()
+            ->arrayNode('plugins')
+                ->treatNullLike(array())
+                ->prototype('scalar')->end()
+                ->defaultValue(array('image', 'imagetools', 'link', 'lists', 'paste', 'wordcount'))
+                ->end()
+            ->arrayNode('menubar')
+                ->treatNullLike(array())
+                ->prototype('scalar')->end()
+                ->defaultValue(array('edit', 'insert', 'view', 'format', 'tools'))
+                ->end()
+            ->arrayNode('toolbar')
+                ->arrayPrototype()
+                    ->treatNullLike(array())
+                    ->prototype('scalar')->end()
+                    ->defaultValue(array(
+                        ['undo', 'redo'],
+                        ['selectstyle'],
+                        ['paste'],
+                        ['bold', 'italic'],
+                        ['alignleft', 'aligncenter', 'alignright', 'alignjustify'],
+                        ['bulllist', 'numlist', 'outdent', 'indent'],
+                        ['link', 'image'],
+                    ))
+                    ->end()
+                ->end()
+            ->arrayNode('images')
+                ->children()
+                    ->booleanNode('caption')->defaultValue(true)->end()
+                    ->booleanNode('credentials')->defaultValue(true)->end()
+                    ->booleanNode('advanced_tab')->defaultValue(true)->end()
+                    ->booleanNode('title')->defaultValue(true)->end()
+                    ->end()
+                ->end()
+        ;
 
         return $treeBuilder;
     }
