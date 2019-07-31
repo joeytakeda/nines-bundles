@@ -24,11 +24,11 @@
         <div class="{{ block('form_group_class') }}">
             <div class="clearfix">
                 {% if attr.add_path is defined %}
-                    <div class="input-group">
+                    <div class="col-sm-9">
                         {{- form_widget(form) -}}
-                        <span class="input-group-btn">
+                    </div>
+                    <div class="col-sm-3">
                         <a href="{{ path(attr.add_path) }}" class="btn btn-primary popup">{{ attr.add_label }}</a>
-                    </span>
                     </div>
                 {% else %}
                     {{- form_widget(form) -}}
