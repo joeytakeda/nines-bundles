@@ -60,6 +60,8 @@ Remove the CkEditor configuration.
 
 ```
 
+Remove references to the ``CkEditorType`` form widget. They should be ``TextareaType`` now.
+
 Remove the CkEditor bundle from AppKernel.php and replace it with the NinesEditorBundle.
 
 ```diff
@@ -67,11 +69,37 @@ Remove the CkEditor bundle from AppKernel.php and replace it with the NinesEdito
 +            new Nines\EditorBundle\NinesEditorBundle(),
 ```
 
+Add the image upload directory configuration parameter.
+
+```yaml
+# app/config/parameters.yml and app/config/parameters.yml.dist
+
+parameters:
+  nines.editor.upload_dir: /path/to/uploads
+```
+
 Add TinyMCE as a Bower dependency for your project.
 
 ```bash
 bower install --save "tinymce-dist#^5.0.2"
 ```
+
+Update any tests which extend ``Nines\UtilBundle\Tests\Util\BaseTestCase``. The setUp() function
+changed in a backward-incompatible way between versions 1.x and 2.x.
+
+```diff
+- protected function setUp() { ... }
++ protected function setUp() : void { ... }
+```
+
+Add the editor widgets to the twig templates that need them.
+
+```twig
+{% block javascripts %}
+	{% include 'NinesEditorBundle:editor:widget.html.twig' %}
+{% endblock %}
+```
+
 
 Updating from Master
 --------------------
