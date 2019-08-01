@@ -166,7 +166,7 @@ class PageController extends Controller {
      * @return array|RedirectResponse
      *
      * @IsGranted("ROLE_BLOG_ADMIN")
-     * @Route("/{id}/edit", name="page_edit", methods={"GET"})
+     * @Route("/{id}/edit", name="page_edit", methods={"GET","POST"})
 
      * @Template()
      */
