@@ -22,7 +22,6 @@
         "php": ">=7.2.0",
         "doctrine/doctrine-bundle": "^1.8",
         "doctrine/orm": "^2.5",
-        "friendsofsymfony/ckeditor-bundle": "^1.1",
         "friendsofsymfony/user-bundle": "^2.0",
         "knplabs/knp-menu-bundle": "^2.2",
         "knplabs/knp-paginator-bundle": "^4.0",
