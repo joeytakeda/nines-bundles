@@ -100,6 +100,20 @@ Add the editor widgets to the twig templates that need them.
 {% endblock %}
 ```
 
+Add the editor bundle to the routing information.
+
+```yaml
+# app/config/routing.yml
+
+nines_editor:
+    resource: "@NinesEditorBundle/Controller/"
+```
+
+Install the assets
+
+```bash
+./bin/console assets:install --symlink
+```
 
 Updating from Master
 --------------------
