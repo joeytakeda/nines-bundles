@@ -84,8 +84,8 @@ class Text {
         // lowercase
         $s = mb_convert_case($s, MB_CASE_LOWER, 'UTF-8');
 
-        // strip non letter/digit/period/space chars
-        $s = preg_replace('/[^-_a-z0-9. ]/u', '', $s);
+        // strip non letter/digit/space chars
+        $s = preg_replace('/[^-_a-z0-9 ]/u', '', $s);
 
         // transform spaces and runs of separators to separator.
         $quoted = preg_quote($separator, '/');

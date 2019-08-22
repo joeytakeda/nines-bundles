@@ -14,12 +14,6 @@ abstract class TermType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder->add('name', TextType::class, array(
-            'label' => 'Name',
-            'attr' => array(
-                'help_block' => 'A computer-readable name. Should be lowercase without spaces.'
-            ),
-        ));
         $builder->add('label', TextType::class, array(
             'label' => 'Label',
             'attr' => array(
@@ -27,6 +21,7 @@ abstract class TermType extends AbstractType {
             ),
         ));
         $builder->add('description', TextareaType::class, array(
+            'required' => false,
             'attr' => array(
                 'class' => 'tinymce',
             )
