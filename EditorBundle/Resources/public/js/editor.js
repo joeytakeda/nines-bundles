@@ -7,7 +7,7 @@
                 editor.save();
             });
         });
-        tinymce.init(getTinyMceConfig());
+        tinymce.init(getTinyMceConfig(editorUploadPath));
     }
 
     $(document).ready(function(){

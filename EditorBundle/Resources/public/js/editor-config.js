@@ -1,4 +1,4 @@
-function getTinyMceConfig() {
+function getTinyMceConfig(editorUploadPath) {
 
     return {
         branding: false,
