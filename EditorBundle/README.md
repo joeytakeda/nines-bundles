@@ -73,3 +73,18 @@ Then add the editor widget javascript to your templates.
 {% endblock %}
 
 ```
+
+### Custom Config
+
+To customize the editor configuration, copy Resources/public/js/editor-config.js to 
+your bundle and make whatever changes you need. Then add the asset path to the twig 
+global variable configuration.
+
+```yaml
+# app/config/config.yml
+
+twig:
+    globals:
+      nines_editor_config: bundles/nineseditor/js/editor-config.js
+
+```
