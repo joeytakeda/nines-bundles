@@ -10,6 +10,7 @@ use Monolog\Logger;
 use Nines\FeedbackBundle\Entity\Comment;
 use Nines\FeedbackBundle\Form\CommentType;
 use ReflectionClass;
+use ReflectionException;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -149,13 +150,19 @@ class CommentService {
     }
 
     /**
-     * Return the short class name for the entity a comment refers to.
+     * Return the short class name for the entity a comment refers to or null if
+     * the entity cannto be found.
      *
      * @param Comment $comment
-     * @return string
+     *
+     * @return null|string
+     * @throws ReflectionException
      */
     public function entityType(Comment $comment) {
         $entity = $this->findEntity($comment);
+        if( ! $entity) {
+            return null;
+        }
         $reflection = new ReflectionClass($entity);
         return $reflection->getShortName();
     }
