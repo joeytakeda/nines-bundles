@@ -80,7 +80,7 @@ class PostCategoryController extends Controller {
      * @return array|RedirectResponse
      *
      * @IsGranted("ROLE_BLOG_ADMIN")
-     * @Route("/new", name="post_category_new", methods={"GET"})
+     * @Route("/new", name="post_category_new", methods={"GET", "POST"})
 
      * @Template()
      */
