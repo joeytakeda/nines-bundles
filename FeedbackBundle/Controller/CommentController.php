@@ -111,6 +111,8 @@ class CommentController extends Controller {
         $entity = $repo->find($id);
 
         $comment = new Comment();
+        // allow the redirect to work
+        $comment->setEntity(get_class($entity) . ':' . $entity->getId());
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
@@ -118,13 +120,12 @@ class CommentController extends Controller {
             $service->addComment($entity, $comment);
             $notifier->newComment($comment);
             $this->addFlash('success', 'Thank you for your suggestion.');
-            return $this->redirect($service->entityUrl($comment));
+        } 
+        foreach($form->getErrors(true) as $error) {
+            $this->addFlash('danger', $error->getMessage());
         }
 
-        return array(
-            'entity' => $entity,
-			'service' => $service,
-        );
+        return $this->redirect($service->entityUrl($comment));
     }
 
     /**
