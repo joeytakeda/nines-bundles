@@ -36,7 +36,7 @@
             </div>
             {{- form_errors(form) -}}
             {% if attr.help_block is defined %}
-                <p class='help-block'>{{ attr.help_block|raw }}</p>
+                <p class='help-block'>{{ attr.help_block|trans|raw }}</p>
             {% endif %}
         </div>
     </div>
@@ -50,7 +50,7 @@
                 <div class="clearfix">{{ form_widget(form) }}</div>
                 {{ form_errors(form) }}
                 {% if attr.help_block is defined %}
-                    <p class='help-block'>{{ attr.help_block|raw }}</p>
+                    <p class='help-block'>{{ attr.help_block|trans|raw }}</p>
                 {% endif %}
             </div>
         </div>
