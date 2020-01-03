@@ -38,11 +38,11 @@
             </tr>
             <tr>
                 <th>Created</th>
-                <td>{% if postCategory.created %}{{ postCategory.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if postCategory.created %}{{ postCategory.created|date }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Updated</th>
-                <td>{% if postCategory.updated %}{{ postCategory.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if postCategory.updated %}{{ postCategory.updated|date }}{% endif %}</td>
             </tr>
         </tbody>
     </table>
@@ -64,7 +64,7 @@
                 {{ post.excerpt|raw }}
             </div>
             <div class="panel-footer text-right">
-                Posted {{ post.created|date('Y-m-d H:i:s') }} by {{ post.user.fullname }} in
+                Posted {{ post.created|date }} by {{ post.user.fullname }} in
                 <a href="{{ path('post_category_show', {'id': post.category.id }) }}">
                     {{ post.category -}}
                 </a>.

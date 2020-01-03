@@ -39,7 +39,7 @@
     {{ page.content | raw }}
 
     <div class="text-right">
-        Created {{ page.created|date('Y-m-d H:i:s') }} by {{ page.user.fullname }}.
+        Created {{ page.created|date }} by {{ page.user.fullname }}.
     </div>
 
     {% if page.includeComments %}

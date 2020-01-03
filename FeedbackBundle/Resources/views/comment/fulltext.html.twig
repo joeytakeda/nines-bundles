@@ -54,8 +54,8 @@
                         <td>{{ comment.fullname }}</td>
                         <td>{{ comment.email }}</td>
                         <td>{% if comment.followUp %}Yes{% else %}No{% endif %}</td>
-                        <td>{% if comment.created %}{{ comment.created|date('Y-m-d H:i:s') }}{% endif %}</td>
-                        <td>{% if comment.updated %}{{ comment.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                        <td>{% if comment.created %}{{ comment.created|date }}{% endif %}</td>
+                        <td>{% if comment.updated %}{{ comment.updated|date }}{% endif %}</td>
                     </tr>
                 {% endfor %}
             </tbody>

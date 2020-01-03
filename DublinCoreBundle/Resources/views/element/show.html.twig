@@ -45,11 +45,11 @@
             </tr>
             <tr>
                 <th>Created</th>
-                <td>{% if element.created %}{{ element.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if element.created %}{{ element.created|date }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Updated</th>
-                <td>{% if element.updated %}{{ element.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if element.updated %}{{ element.updated|date }}{% endif %}</td>
             </tr>
         </tbody>
     </table>

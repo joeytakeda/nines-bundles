@@ -26,7 +26,7 @@
                             {{ commentNote.content }}
                         </a>
                     </td>
-                    <td>{% if commentNote.created %}{{ commentNote.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if commentNote.created %}{{ commentNote.created|date }}{% endif %}</td>
                 </tr>
             {% endfor %}
         </tbody>
