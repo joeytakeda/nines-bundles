@@ -43,4 +43,7 @@ return [
 3. Copy the default configurations to `config/packages`
 
 ```shell script
-cp venod
+cp vendor/ubermichael/nines/*/Resources/config/nines_*.yaml config/packages/
+```
+
+4. Update the routing information
